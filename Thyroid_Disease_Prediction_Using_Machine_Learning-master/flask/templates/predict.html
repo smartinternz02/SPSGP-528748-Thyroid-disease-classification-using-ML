@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thyroid Disease Classification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://media.istockphoto.com/id/1198780608/photo/human-thyroid-anatomy.jpg?s=612x612&w=0&k=20&c=A96BQGdc57yAqHZI3cS2xrHJTPcUBvXsXQqdNSWh8jA=');
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px;
+    }
+
+    .header button {
+        padding: 10px 20px;
+      margin: 0 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .header button:hover {
+      background-color: #35d31c;
+    }
+
+    .left-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 20px;
+      color: white; 
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      max-width: 300px;
+    }
+
+    .form-group {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 10px;
+      color: red;
+      display: inline-block;
+      width: 100px;
+    }
+
+    .form-group select,
+    .form-group input {
+      padding: 8px;
+      width: 200px;
+    }
+
+    .form-group
+    {
+      margin: 8px 0;
+    }
+    .submit-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script>
+    function goToHome() {
+      window.location.href ="{{ url_for('home') }}";
+    }
+    function validateForm() {
+    // Get values from the form
+    var goitre = document.getElementById("1").value;
+    var tumor = document.getElementById("2").value;
+    var hypopituitary = document.getElementById("3").value;
+    var psych = document.getElementById("4").value;
+    var tsh = document.getElementById("input1").value;
+    var t3 = document.getElementById("input2").value;
+    var tt4 = document.getElementById("input3").value;
+    var t4u = document.getElementById("input4").value;
+    var fti = document.getElementById("input5").value;
+    var tbg = document.getElementById("input6").value;
+    if (goitre === "" || tumor === "" || hypopituitary === "" || psych === "" ||
+        tsh === "" || t3 === "" || tt4 === "" || t4u === "" || fti === "" || tbg === "") {
+      alert("Please fill in all required fields.");
+      return false; 
+    }
+    return true;
+  }
+
+</script>
+</head>
+
+<body>
+  <div class="header">
+    <button onclick="goToHome()">Home</button>
+    <button onclick="GoToPredict()">Predict</button>
+  </div>
+  <div class="left-container">
+    <div class="title">Thyroid Disease Classification</div>
+    <form class="form-container"  action="{{url_for( 'submit')}}" method="post" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="1">goitre</label>
+        <input type="text" id="1" name="Goitre" list="l" placeholder="Enter True or Flase">
+      </div>
+      <div class="form-group">
+        <label for="2">tumor</label>
+        <input type="text" id="2" name="Tumor" list="l" placeholder="Enter True or Flase">
+      </div>
+      <div class="form-group">
+        <label for="3">hypopituatry</label>
+        <input type="text" id="3" name="Hypopituitary" list="l" placeholder="Enter True or Flase">
+      </div>
+      <div class="form-group">
+        <label for="4">psych</label>
+        <input type="text" id="4" name="Psych" list="l" placeholder="Enter True or Flase">
+      </div>
+      <datalist id="l">
+        <option>f</option>
+        <option>t</option>
+      </datalist>
+      <div class="form-group">
+        <label for="input1">TSH</label>
+        <input type="text" id="input1" name="TSH_VAL"placeholder="TSH"/>
+      </div>
+      <div class="form-group">
+        <label for="input2">T3</label>
+        <input type="text" id="input2" name="T3_VAL" placeholder="T3"/>
+      </div>
+      <div class="form-group">
+        <label for="input3">TT4</label>
+        <input type="text" id="input3" name="TT4_VAL" placeholder="TT4" />
+      </div>
+      <div class="form-group">
+        <label for="input4">T4U</label>
+        <input type="text" id="input4"name="T4U_VAL" placeholder="T4U" />
+      </div>
+      <div class="form-group">
+        <label for="input5">FTI</label>
+        <input type="text" id="input5"name="FTI_VAL" placeholder="FTI"/>
+      </div>
+      <div class="form-group">
+        <label for="input6">TBG</label>
+        <input type="text" id="input6" name="TBG_VAL" placeholder="TBG" />
+      </div>
+      <button class="submit-button" onclick="submitForm()">Submit</button>
+    </form>
+  </div>
+</body>
+
+</html>
